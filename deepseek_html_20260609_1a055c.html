@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейтинговый журнал | Студенты</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .rating-title {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #333;
+            padding: 0 30px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 0 30px 30px 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .rank-1 {
+            background: linear-gradient(90deg, #ffd70020, transparent);
+            font-weight: bold;
+        }
+
+        .rank-2 {
+            background: linear-gradient(90deg, #c0c0c020, transparent);
+        }
+
+        .rank-3 {
+            background: linear-gradient(90deg, #cd7f3220, transparent);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            transition: width 0.3s;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            th, td { font-size: 0.85em; padding: 8px; }
+            .dashboard { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Рейтинговый электронный журнал</h1>
+            <p>Практические работы • Посещаемость • Общий рейтинг</p>
+            <p>📅 Актуально на: <span id="lastUpdate"></span></p>
+        </div>
+
+        <div class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>👨‍🎓 Всего студентов</h3>
+                    <div class="value" id="totalStudents">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>📈 Средний балл</h3>
+                    <div class="value" id="avgScore">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>📚 Всего работ</h3>
+                    <div class="value" id="totalWorks">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>🏆 Лидер рейтинга</h3>
+                    <div class="value" id="topStudent">—</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="rating-title">🏅 Рейтинг студентов</h2>
+        <div class="table-wrapper">
+            <table id="ratingTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Студент</th>
+                        <th>Группа</th>
+                        <th>Практические работы</th>
+                        <th>Посещаемость</th>
+                        <th>Рейтинг</th>
+                        <th>Прогресс</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsList">
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Загрузка данных...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>Данные обновляются автоматически из журнала преподавателя</p>
+        </div>
+    </div>
+
+    <script>
+        // URL к JSON файлу (замените на ваш актуальный URL)
+        // Для GitHub Pages: https://ВАШ_USERNAME.github.io/ВАШ_РЕПО/data/students.json
+        const DATA_URL = 'data/students.json';
+        
+        let studentsData = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Данные не загружены');
+                studentsData = await response.json();
+                updateDashboard();
+                renderTable();
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString('ru-RU');
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                document.getElementById('studentsList').innerHTML = 
+                    '<tr><td colspan="7" style="text-align: center; color: red;">⚠️ Данные временно недоступны. Пожалуйста, проверьте позже.</td></tr>';
+            }
+        }
+
+        function updateDashboard() {
+            document.getElementById('totalStudents').textContent = studentsData.length;
+            
+            let totalRating = 0;
+            studentsData.forEach(s => totalRating += s.rating);
+            const avgRating = studentsData.length > 0 ? (totalRating / studentsData.length).toFixed(1) : 0;
+            document.getElementById('avgScore').textContent = avgRating;
+            
+            let maxRating = -1;
+            let topStudentName = '—';
+            studentsData.forEach(s => {
+                if (s.rating > maxRating) {
+                    maxRating = s.rating;
+                    topStudentName = s.name;
+                }
+            });
+            document.getElementById('topStudent').textContent = topStudentName;
+            
+            const maxPossibleWorks = studentsData[0]?.totalWorks || 0;
+            document.getElementById('totalWorks').textContent = maxPossibleWorks;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('studentsList');
+            tbody.innerHTML = '';
+            
+            const sorted = [...studentsData].sort((a, b) => b.rating - a.rating);
+            
+            sorted.forEach((student, index) => {
+                const row = tbody.insertRow();
+                let rankClass = '';
+                if (index === 0) rankClass = 'rank-1';
+                else if (index === 1) rankClass = 'rank-2';
+                else if (index === 2) rankClass = 'rank-3';
+                row.className = rankClass;
+                
+                row.insertCell(0).textContent = index + 1;
+                row.insertCell(1).innerHTML = `<strong>${student.name}</strong>`;
+                row.insertCell(2).textContent = student.group;
+                
+                // Практические работы
+                const worksCell = row.insertCell(3);
+                const completedWorks = student.completedWorks || 0;
+                const totalWorks = student.totalWorks || 0;
+                worksCell.innerHTML = `
+                    ${completedWorks}/${totalWorks}
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${(completedWorks/totalWorks)*100}%"></div>
+                    </div>
+                `;
+                
+                // Посещаемость
+                const attendanceCell = row.insertCell(4);
+                const attendance = student.attendance || 0;
+                let attendanceClass = attendance >= 75 ? 'badge-success' : 'badge-warning';
+                attendanceCell.innerHTML = `<span class="badge ${attendanceClass}">${attendance}%</span>`;
+                
+                row.insertCell(5).innerHTML = `<strong style="font-size: 1.2em; color: #667eea;">${student.rating}</strong>`;
+                
+                // Прогресс-бар общего рейтинга
+                const progressCell = row.insertCell(6);
+                const maxRating = 100;
+                progressCell.innerHTML = `
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${(student.rating/maxRating)*100}%; background: #667eea;"></div>
+                    </div>
+                    <small>${(student.rating/maxRating*100).toFixed(0)}% от максимума</small>
+                `;
+            });
+        }
+
+        loadData();
+        setInterval(loadData, 30000);
+    </script>
+</body>
+</html>

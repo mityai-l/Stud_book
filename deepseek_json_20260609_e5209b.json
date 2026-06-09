@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Иванов Иван",
+    "group": "ПИ-101",
+    "completedWorks": 12,
+    "totalWorks": 15,
+    "attendance": 95,
+    "rating": 87.5
+  },
+  {
+    "name": "Петрова Анна",
+    "group": "ПИ-101",
+    "completedWorks": 14,
+    "totalWorks": 15,
+    "attendance": 98,
+    "rating": 94.2
+  },
+  {
+    "name": "Сидоров Сергей",
+    "group": "ПИ-102",
+    "completedWorks": 10,
+    "totalWorks": 15,
+    "attendance": 82,
+    "rating": 72.8
+  },
+  {
+    "name": "Козлова Мария",
+    "group": "ПИ-101",
+    "completedWorks": 15,
+    "totalWorks": 15,
+    "attendance": 100,
+    "rating": 98.5
+  },
+  {
+    "name": "Смирнов Алексей",
+    "group": "ПИ-102",
+    "completedWorks": 8,
+    "totalWorks": 15,
+    "attendance": 70,
+    "rating": 58.3
+  }
+]

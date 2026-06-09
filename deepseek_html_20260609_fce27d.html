@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель журнала</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background: #5a67d8;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-success {
+            background: #48bb78;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        input, select {
+            padding: 8px;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .student-row:hover {
+            background: #f7fafc;
+        }
+
+        .json-output {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔒 Админ-панель журнала</h1>
+            <p>Учет практических работ и посещаемости</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-success" onclick="addStudent()">➕ Добавить студента</button>
+            <button class="btn" onclick="exportJSON()">📥 Экспорт JSON</button>
+            <button class="btn" onclick="copyJSON()">📋 Копировать JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importJSON(this)">
+            <button class="btn" onclick="document.getElementById('importFile').click()">📂 Импорт JSON</button>
+        </div>
+
+        <table id="studentsTable">
+            <thead>
+                <tr>
+                    <th>Студент</th>
+                    <th>Группа</th>
+                    <th>Выполнено работ</th>
+                    <th>Всего работ</th>
+                    <th>Посещаемость (%)</th>
+                    <th>Рейтинг</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+            </tbody>
+        </table>
+
+        <div class="json-output" id="jsonOutput">
+            // Здесь будет JSON для копирования в data/students.json
+        </div>
+    </div>
+
+    <script>
+        let students = [];
+
+        function calculateRating(student) {
+            const worksScore = (student.completedWorks / student.totalWorks) * 100;
+            const attendanceScore = student.attendance;
+            const rating = (worksScore * 0.7 + attendanceScore * 0.3);
+            return Math.round(rating * 10) / 10;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('studentsTableBody');
+            tbody.innerHTML = '';
+            
+            students.forEach((student, index) => {
+                const row = tbody.insertRow();
+                
+                row.insertCell(0).innerHTML = `<input type="text" value="${student.name}" onchange="updateStudent(${index}, 'name', this.value)">`;
+                row.insertCell(1).innerHTML = `<input type="text" value="${student.group}" onchange="updateStudent(${index}, 'group', this.value)">`;
+                row.insertCell(2).innerHTML = `<input type="number" value="${student.completedWorks}" min="0" max="${student.totalWorks}" onchange="updateStudent(${index}, 'completedWorks', parseInt(this.value))">`;
+                row.insertCell(3).innerHTML = `<input type="number" value="${student.totalWorks}" min="1" onchange="updateStudent(${index}, 'totalWorks', parseInt(this.value))">`;
+                row.insertCell(4).innerHTML = `<input type="number" value="${student.attendance}" min="0" max="100" onchange="updateStudent(${index}, 'attendance', parseInt(this.value))">`;
+                
+                const rating = calculateRating(student);
+                student.rating = rating;
+                row.insertCell(5).innerHTML = `<strong style="color: #667eea;">${rating}</strong>`;
+                
+                row.insertCell(6).innerHTML = `<button class="btn-danger" style="padding: 5px 10px;" onclick="deleteStudent(${index})">🗑️ Удалить</button>`;
+            });
+            
+            updateJSONOutput();
+        }
+
+        function updateStudent(index, field, value) {
+            students[index][field] = value;
+            if (field === 'completedWorks' || field === 'totalWorks' || field === 'attendance') {
+                if (field === 'completedWorks' && value > students[index].totalWorks) {
+                    students[index].completedWorks = students[index].totalWorks;
+                }
+            }
+            renderTable();
+        }
+
+        function addStudent() {
+            students.push({
+                name: "Новый студент",
+                group: "Группа",
+                completedWorks: 0,
+                totalWorks: 10,
+                attendance: 100,
+                rating: 0
+            });
+            renderTable();
+        }
+
+        function deleteStudent(index) {
+            if (confirm('Удалить студента?')) {
+                students.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        function updateJSONOutput() {
+            const output = students.map(s => ({
+                name: s.name,
+                group: s.group,
+                completedWorks: s.completedWorks,
+                totalWorks: s.totalWorks,
+                attendance: s.attendance,
+                rating: calculateRating(s)
+            }));
+            document.getElementById('jsonOutput').textContent = JSON.stringify(output, null, 2);
+        }
+
+        function exportJSON() {
+            const data = JSON.stringify(JSON.parse(document.getElementById('jsonOutput').textContent), null, 2);
+            const blob = new Blob([data], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'students.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyJSON() {
+            const json = document.getElementById('jsonOutput').textContent;
+            navigator.clipboard.writeText(json);
+            alert('JSON скопирован в буфер обмена!');
+        }
+
+        function importJSON(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    students = imported.map(s => ({
+                        ...s,
+                        rating: calculateRating(s)
+                    }));
+                    renderTable();
+                    alert('Данные импортированы!');
+                } catch(err) {
+                    alert('Ошибка импорта: неверный формат JSON');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        students = [
+            {
+                name: "Иванов Иван",
+                group: "ПИ-101",
+                completedWorks: 12,
+                totalWorks: 15,
+                attendance: 95,
+                rating: 0
+            },
+            {
+                name: "Петрова Анна",
+                group: "ПИ-101",
+                completedWorks: 14,
+                totalWorks: 15,
+                attendance: 98,
+                rating: 0
+            },
+            {
+                name: "Сидоров Сергей",
+                group: "ПИ-102",
+                completedWorks: 10,
+                totalWorks: 15,
+                attendance: 82,
+                rating: 0
+            }
+        ];
+        
+        renderTable();
+    </script>
+</body>
+</html>
