@@ -1,48 +1,129 @@
 {
   "works": [
-    { "id": "work1", "name": "Лабораторная №1", "maxScore": 10, "passScore": 6 },
-    { "id": "work2", "name": "Лабораторная №2", "maxScore": 10, "passScore": 6 },
-    { "id": "work3", "name": "Проект", "maxScore": 15, "passScore": 9 }
+    {
+      "id": "work1",
+      "name": "Лабораторная №1",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work2",
+      "name": "Лабораторная №2",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work3",
+      "name": "Практическая работа",
+      "maxScore": 15,
+      "passScore": 9
+    },
+    {
+      "id": "work4",
+      "name": "Тестирование",
+      "maxScore": 15,
+      "passScore": 9
+    }
   ],
   "students": [
     {
       "name": "Иванов Иван",
-      "group": "ПИ-101",
+      "group": "ИСП2111",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "late" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "absent" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work1": 8, "work2": 9, "work3": 12 },
-      "rating": 0
+      "grades": {
+        "work1": 8,
+        "work2": 9,
+        "work3": 12,
+        "work4": 10
+      },
+      "rating": 78.6
     },
     {
       "name": "Петрова Анна",
-      "group": "ПИ-101",
+      "group": "ИСП2111",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "present" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "present" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work1": 10, "work2": 10, "work3": 15 },
-      "rating": 0
+      "grades": {
+        "work1": 10,
+        "work2": 10,
+        "work3": 14,
+        "work4": 13
+      },
+      "rating": 95.8
     },
     {
       "name": "Сидоров Сергей",
-      "group": "ПИ-102",
+      "group": "ИСП2351",
       "lessons": [
-        { "date": "2024-02-01", "status": "late" },
-        { "date": "2024-02-08", "status": "late" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "absent" },
-        { "date": "2024-02-29", "status": "absent" }
+        {
+          "date": "2024-02-01",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "absent"
+        }
       ],
-      "grades": { "work1": 5, "work2": 4, "work3": 6 },
-      "rating": 0
+      "grades": {
+        "work1": 5,
+        "work2": 4,
+        "work3": 7,
+        "work4": 6
+      },
+      "rating": 36.8
     }
   ]
 }
