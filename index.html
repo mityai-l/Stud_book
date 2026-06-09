@@ -120,7 +120,6 @@
             color: #4C1D95;
         }
 
-        /* Двойные вкладки */
         .filter-bar {
             background: #F8F4FF;
             border-bottom: 1px solid #E9D5FF;
@@ -277,24 +276,27 @@
             flex-wrap: wrap;
         }
 
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
-        }
-
         .current-filters {
             background: #F3E8FF;
             padding: 8px 30px;
             font-size: 0.8em;
             color: #6D28D9;
             border-bottom: 1px solid #E9D5FF;
+        }
+
+        .discipline-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .discipline-tag {
+            background: #EDE9FE;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.7em;
+            color: #6D28D9;
         }
 
         @media (max-width: 768px) {
@@ -304,7 +306,6 @@
             th, td { font-size: 0.7em; padding: 6px 3px; }
             .filter-section { padding: 8px 15px; }
             .filter-btn { padding: 4px 10px; font-size: 0.75em; }
-            .group-info { padding: 10px 15px; flex-direction: column; align-items: flex-start; }
             .stat-card .value { font-size: 1.3em; }
         }
     </style>
@@ -360,13 +361,13 @@
         <!-- Панель фильтров -->
         <div class="filter-bar">
             <div class="filter-section">
-                <div class="filter-label">📚 Дисциплина:</div>
-                <div class="filter-buttons" id="disciplineButtons"></div>
+                <div class="filter-label">👥 Группа:</div>
+                <div class="filter-buttons" id="groupButtons"></div>
             </div>
             <div class="separator"></div>
             <div class="filter-section">
-                <div class="filter-label">👥 Группа:</div>
-                <div class="filter-buttons" id="groupButtons"></div>
+                <div class="filter-label">📚 Дисциплина:</div>
+                <div class="filter-buttons" id="disciplineButtons"></div>
             </div>
         </div>
 
@@ -396,39 +397,48 @@
     <script>
         const DATA_URL = 'data/students.json';
         let journalData = null;
-        let currentDiscipline = 'all';
         let currentGroup = 'all';
-        let disciplines = [];
+        let currentDiscipline = 'all';
         let groups = [];
+        let disciplines = [];
 
-        async function loadData() {
-            try {
-                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Данные не загружены');
-                journalData = await response.json();
-                
-                // Получаем уникальные дисциплины из работ
-                disciplines = ['all', ...new Set(journalData.works.map(w => w.discipline || 'Общая'))];
-                
-                // Получаем уникальные группы из студентов
-                groups = ['all', ...new Set(journalData.students.map(s => s.group))];
-                
-                journalData.students.forEach(s => s.rating = calcRating(s));
-                
-                updateDashboard();
-                renderFilters();
-                renderJournal();
-                document.getElementById('lastUpdate').textContent = new Date().toLocaleString('ru-RU');
-            } catch (error) {
-                console.error('Ошибка загрузки:', error);
-                document.getElementById('tableBody').innerHTML = 
-                    '<tr><td colspan="10" style="text-align: center; color: #C62828; padding: 40px;">⚠️ Данные временно недоступны</td></tr>';
-            }
+        // Получить список дисциплин для выбранной группы
+        function getDisciplinesForGroup(group) {
+            if (group === 'all') return [];
+            const groupDisciplines = journalData.groupDisciplines[group] || [];
+            const disciplineNames = {};
+            journalData.disciplines.forEach(d => { disciplineNames[d.id] = d.name; });
+            return groupDisciplines.map(id => disciplineNames[id] || id);
         }
 
-        function getWorksByDiscipline() {
-            if (currentDiscipline === 'all') return journalData.works;
-            return journalData.works.filter(w => (w.discipline || 'Общая') === currentDiscipline);
+        // Получить работы для выбранной группы и дисциплины
+        function getFilteredWorks() {
+            let works = journalData.works;
+            
+            // Фильтр по группе (только дисциплины, которые есть у группы)
+            if (currentGroup !== 'all') {
+                const groupDisciplines = journalData.groupDisciplines[currentGroup] || [];
+                works = works.filter(w => groupDisciplines.includes(w.discipline));
+            }
+            
+            // Фильтр по выбранной дисциплине
+            if (currentDiscipline !== 'all') {
+                works = works.filter(w => w.discipline === currentDiscipline);
+            }
+            
+            return works;
+        }
+
+        // Получить список доступных дисциплин для фильтра
+        function getAvailableDisciplines() {
+            if (currentGroup === 'all') {
+                // Если выбраны все группы, показываем все дисциплины
+                return ['all', ...new Set(journalData.works.map(w => w.discipline))];
+            } else {
+                // Иначе только дисциплины выбранной группы
+                const groupDisciplines = journalData.groupDisciplines[currentGroup] || [];
+                return ['all', ...groupDisciplines];
+            }
         }
 
         function calcAttendanceForRating(lessons) {
@@ -438,7 +448,7 @@
         }
 
         function calcRating(student) {
-            const works = getWorksByDiscipline();
+            const works = getFilteredWorks();
             if (works.length === 0) return 0;
             
             let totalScore = 0;
@@ -448,12 +458,29 @@
                 maxTotalScore += work.maxScore;
             });
             const avgGrade = maxTotalScore > 0 ? (totalScore / maxTotalScore * 100) : 0;
-            const attendanceForRating = calcAttendanceForRating(student.lessons);
-            return Math.round((avgGrade * 0.7 + attendanceForRating * 0.3) * 10) / 10;
+            const attendance = calcAttendanceForRating(student.lessons);
+            return Math.round((avgGrade * 0.7 + attendance * 0.3) * 10) / 10;
         }
 
-        function recalcAllRatings() {
-            journalData.students.forEach(s => s.rating = calcRating(s));
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Данные не загружены');
+                journalData = await response.json();
+                
+                groups = ['all', ...new Set(journalData.students.map(s => s.group))];
+                
+                journalData.students.forEach(s => s.rating = calcRating(s));
+                
+                updateDashboard();
+                renderGroupButtons();
+                renderJournal();
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString('ru-RU');
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                document.getElementById('tableBody').innerHTML = 
+                    '<tr><td colspan="10" style="text-align: center; color: #C62828; padding: 40px;">⚠️ Данные временно недоступны</td></tr>';
+            }
         }
 
         function updateDashboard() {
@@ -469,7 +496,7 @@
             document.getElementById('avgRating').textContent = (totalRating / students.length).toFixed(1);
             document.getElementById('avgAttendance').textContent = Math.round(totalAttendance / students.length) + '%';
             
-            const works = getWorksByDiscipline();
+            const works = getFilteredWorks();
             document.getElementById('totalWorks').textContent = works.length;
             
             let maxRating = -1;
@@ -483,35 +510,53 @@
             document.getElementById('topStudent').textContent = topStudentName;
         }
 
-        function renderFilters() {
-            // Дисциплины
-            const disciplineContainer = document.getElementById('disciplineButtons');
-            disciplineContainer.innerHTML = '';
-            disciplines.forEach(d => {
-                const displayName = d === 'all' ? '📚 Все дисциплины' : d;
-                const btn = document.createElement('button');
-                btn.className = `filter-btn ${currentDiscipline === d ? 'active' : ''}`;
-                btn.textContent = displayName;
-                btn.onclick = () => { currentDiscipline = d; renderFilters(); renderJournal(); updateDashboard(); };
-                disciplineContainer.appendChild(btn);
-            });
+        function renderGroupButtons() {
+            const container = document.getElementById('groupButtons');
+            container.innerHTML = '';
             
-            // Группы
-            const groupContainer = document.getElementById('groupButtons');
-            groupContainer.innerHTML = '';
             groups.forEach(g => {
                 const displayName = g === 'all' ? '👥 Все группы' : g;
                 const btn = document.createElement('button');
                 btn.className = `filter-btn ${currentGroup === g ? 'active' : ''}`;
                 btn.textContent = displayName;
-                btn.onclick = () => { currentGroup = g; renderFilters(); renderJournal(); };
-                groupContainer.appendChild(btn);
+                btn.onclick = () => {
+                    currentGroup = g;
+                    currentDiscipline = 'all';
+                    renderGroupButtons();
+                    renderDisciplineButtons();
+                    renderJournal();
+                    updateDashboard();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function renderDisciplineButtons() {
+            const availableDisciplines = getAvailableDisciplines();
+            const disciplineNames = {};
+            journalData.disciplines.forEach(d => { disciplineNames[d.id] = d.name; });
+            
+            const container = document.getElementById('disciplineButtons');
+            container.innerHTML = '';
+            
+            availableDisciplines.forEach(d => {
+                let displayName = d === 'all' ? '📚 Все дисциплины' : (disciplineNames[d] || d);
+                const btn = document.createElement('button');
+                btn.className = `filter-btn ${currentDiscipline === d ? 'active' : ''}`;
+                btn.textContent = displayName;
+                btn.onclick = () => {
+                    currentDiscipline = d;
+                    renderDisciplineButtons();
+                    renderJournal();
+                    updateDashboard();
+                };
+                container.appendChild(btn);
             });
             
             // Текущие фильтры
-            const disciplineName = currentDiscipline === 'all' ? 'все дисциплины' : currentDiscipline;
             const groupName = currentGroup === 'all' ? 'все группы' : currentGroup;
-            document.getElementById('currentFilters').innerHTML = `🔍 Текущие фильтры: ${disciplineName} • ${groupName}`;
+            const disciplineName = currentDiscipline === 'all' ? 'все дисциплины' : (disciplineNames[currentDiscipline] || currentDiscipline);
+            document.getElementById('currentFilters').innerHTML = `🔍 Текущие фильтры: ${groupName} • ${disciplineName}`;
         }
 
         function getFilteredStudents() {
@@ -524,7 +569,9 @@
 
         function renderJournal() {
             const filtered = getFilteredStudents();
-            const works = getWorksByDiscipline();
+            const works = getFilteredWorks();
+            const disciplineNames = {};
+            journalData.disciplines.forEach(d => { disciplineNames[d.id] = d.name; });
             
             if (filtered.length === 0) {
                 document.getElementById('groupInfo').innerHTML = '<div class="group-stats">Нет студентов</div>';
@@ -533,9 +580,6 @@
                 return;
             }
             
-            const groupName = currentGroup === 'all' ? 'все группы' : currentGroup;
-            const disciplineName = currentDiscipline === 'all' ? 'все дисциплины' : currentDiscipline;
-            
             let totalRating = 0;
             let totalAttendance = 0;
             filtered.forEach(s => {
@@ -543,20 +587,32 @@
                 totalAttendance += calcAttendanceForRating(s.lessons);
             });
             
+            const groupName = currentGroup === 'all' ? 'все группы' : currentGroup;
+            const disciplineName = currentDiscipline === 'all' ? 'все дисциплины' : (disciplineNames[currentDiscipline] || currentDiscipline);
+            
+            // Список дисциплин группы
+            let disciplinesList = '';
+            if (currentGroup !== 'all') {
+                const groupDisciplines = journalData.groupDisciplines[currentGroup] || [];
+                const groupDisciplineNames = groupDisciplines.map(id => disciplineNames[id] || id);
+                disciplinesList = `<div class="discipline-list">📚 Дисциплины группы: ${groupDisciplineNames.join(' • ')}</div>`;
+            }
+            
             document.getElementById('groupInfo').innerHTML = `
-                <div><strong>${disciplineName} • ${groupName}</strong></div>
+                <div><strong>${groupName}</strong> • ${disciplineName}</div>
                 <div class="group-stats">
                     <span class="group-stat">⭐ Средний рейтинг: ${(totalRating/filtered.length).toFixed(1)}</span>
                     <span class="group-stat">📈 Среднее присутствие: ${Math.round(totalAttendance/filtered.length)}%</span>
                     <span class="group-stat">👨‍🎓 Студентов: ${filtered.length}</span>
                 </div>
+                ${disciplinesList}
             `;
             
             let headerHtml = `<tr><th style="min-width: 160px;">Студент</th><th style="min-width: 80px;">Группа</th>`;
             works.forEach(work => {
                 headerHtml += `<th>${work.name}<br><small>${work.maxScore} б., порог ${work.passScore}</small></th>`;
             });
-            headerHtml += `<th>Присутствие<br><small>для рейтинга</small></th><th>Рейтинг</th></tr>`;
+            headerHtml += `<th>Присутствие<br><small>для рейтинга</small></th><th>Рейтинг</th>?</div>`;
             document.getElementById('tableHeader').innerHTML = headerHtml;
             
             let bodyHtml = '';
@@ -575,7 +631,7 @@
                 const attendance = calcAttendanceForRating(student.lessons);
                 bodyHtml += `<td style="font-weight: bold;">${attendance}%</td>`;
                 bodyHtml += `<td class="rating-cell"><strong>${student.rating}</strong></td>`;
-                bodyHtml += `</tr>`;
+                bodyHtml += `</table>`;
             });
             
             document.getElementById('tableBody').innerHTML = bodyHtml;
