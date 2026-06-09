@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный журнал | Группы и оценки</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Дашборд */
+        .dashboard {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            color: #667eea;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Вкладки по группам */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            padding: 15px 30px 0 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: #e0e0e0;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 0.95em;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            background: #d0d0d0;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 2px solid white;
+        }
+
+        /* Информация о группе */
+        .group-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .group-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .group-stat {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+
+        /* Таблица журнала */
+        .table-wrapper {
+            overflow-x: auto;
+            padding: 20px 30px 30px 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            border: 1px solid #7b8cce;
+        }
+
+        td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .student-name {
+            text-align: left;
+            font-weight: 600;
+            background: #fafafa;
+            position: sticky;
+            left: 0;
+            background: white;
+            box-shadow: 2px 0 5px -2px rgba(0,0,0,0.1);
+        }
+
+        .student-name-cell {
+            position: sticky;
+            left: 0;
+            background: white;
+            z-index: 1;
+        }
+
+        tr:hover td {
+            background: #f5f5f5;
+        }
+
+        tr:hover .student-name-cell {
+            background: #f5f5f5;
+        }
+
+        .grade-cell {
+            min-width: 50px;
+        }
+
+        .grade-input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.85em;
+        }
+
+        .grade-pass {
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .grade-fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .avg-row {
+            background: #e8eaf6;
+            font-weight: bold;
+        }
+
+        .avg-row td {
+            border-top: 2px solid #667eea;
+        }
+
+        .rating-cell {
+            background: #e8eaf6;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            th, td { font-size: 0.75em; padding: 6px 4px; }
+            .grade-input { width: 40px; padding: 3px; }
+            .tabs { padding: 10px 15px 0 15px; }
+            .tab { padding: 6px 12px; font-size: 0.8em; }
+            .group-info { padding: 10px 15px; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Электронный журнал</h1>
+            <p>Практические работы • Посещаемость • Рейтинг</p>
+            <p>📅 Актуально на: <span id="lastUpdate"></span></p>
+        </div>
+
+        <div class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>👨‍🎓 Всего студентов</h3>
+                    <div class="value" id="totalStudents">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>📈 Средний рейтинг</h3>
+                    <div class="value" id="avgRating">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>📝 Всего работ</h3>
+                    <div class="value" id="totalWorks">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>🏆 Лидер рейтинга</h3>
+                    <div class="value" id="topStudent">—</div>
+                </div>
+                <div class="stat-card">
+                    <h3>📊 Средняя посещаемость</h3>
+                    <div class="value" id="avgAttendance">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладки по группам -->
+        <div class="tabs" id="tabsContainer"></div>
+
+        <!-- Информация о группе -->
+        <div class="group-info" id="groupInfo">
+            <div class="group-stats" id="groupStats"></div>
+        </div>
+
+        <!-- Таблица журнала -->
+        <div class="table-wrapper">
+            <table id="journalTable">
+                <thead id="tableHeader">
+                    <!-- Заголовки будут генерироваться динамически -->
+                </thead>
+                <tbody id="tableBody">
+                    <tr><td colspan="2">Загрузка данных...</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="footer">
+            <p>✅ Зачтено — зелёный фон | ❌ Не зачтено — красный фон | 📊 Рейтинг = (средний балл × 0.7 + посещаемость × 0.3)</p>
+        </div>
+    </div>
+
+    <script>
+        const DATA_URL = 'data/students.json';
+        let journalData = null;
+        let currentGroup = 'all';
+        let groups = [];
+
+        async function loadData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Данные не загружены');
+                journalData = await response.json();
+                
+                // Извлекаем уникальные группы
+                const groupSet = new Set();
+                journalData.students.forEach(s => groupSet.add(s.group));
+                groups = Array.from(groupSet).sort();
+                
+                updateDashboard();
+                renderTabs();
+                renderJournal();
+                document.getElementById('lastUpdate').textContent = new Date().toLocaleString('ru-RU');
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                document.getElementById('tableBody').innerHTML = 
+                    '<tr><td colspan="10" style="text-align: center; color: red;">⚠️ Данные временно недоступны. Пожалуйста, проверьте позже.</td></tr>';
+            }
+        }
+
+        function updateDashboard() {
+            const students = journalData.students;
+            document.getElementById('totalStudents').textContent = students.length;
+            
+            let totalRating = 0;
+            let totalAttendance = 0;
+            students.forEach(s => {
+                totalRating += s.rating;
+                totalAttendance += s.attendance;
+            });
+            document.getElementById('avgRating').textContent = (totalRating / students.length).toFixed(1);
+            document.getElementById('avgAttendance').textContent = Math.round(totalAttendance / students.length) + '%';
+            document.getElementById('totalWorks').textContent = journalData.works.length;
+            
+            let maxRating = -1;
+            let topStudentName = '—';
+            students.forEach(s => {
+                if (s.rating > maxRating) {
+                    maxRating = s.rating;
+                    topStudentName = s.name;
+                }
+            });
+            document.getElementById('topStudent').textContent = topStudentName;
+        }
+
+        function renderTabs() {
+            const tabsContainer = document.getElementById('tabsContainer');
+            tabsContainer.innerHTML = '';
+            
+            const allTab = document.createElement('button');
+            allTab.className = 'tab' + (currentGroup === 'all' ? ' active' : '');
+            allTab.textContent = `📊 Все группы (${journalData.students.length})`;
+            allTab.onclick = () => switchGroup('all');
+            tabsContainer.appendChild(allTab);
+            
+            groups.forEach(group => {
+                const groupCount = journalData.students.filter(s => s.group === group).length;
+                const tab = document.createElement('button');
+                tab.className = 'tab' + (currentGroup === group ? ' active' : '');
+                tab.textContent = `👥 ${group} (${groupCount})`;
+                tab.onclick = () => switchGroup(group);
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        function switchGroup(group) {
+            currentGroup = group;
+            renderTabs();
+            renderJournal();
+        }
+
+        function getFilteredStudents() {
+            if (currentGroup === 'all') {
+                return journalData.students;
+            }
+            return journalData.students.filter(s => s.group === currentGroup);
+        }
+
+        function getGroupStats(filteredStudents) {
+            if (filteredStudents.length === 0) return null;
+            
+            let totalRating = 0;
+            let totalAttendance = 0;
+            let totalAvgGrade = 0;
+            
+            filteredStudents.forEach(s => {
+                totalRating += s.rating;
+                totalAttendance += s.attendance;
+                totalAvgGrade += s.avgGrade;
+            });
+            
+            return {
+                count: filteredStudents.length,
+                avgRating: (totalRating / filteredStudents.length).toFixed(1),
+                avgAttendance: Math.round(totalAttendance / filteredStudents.length) + '%',
+                avgGrade: (totalAvgGrade / filteredStudents.length).toFixed(1)
+            };
+        }
+
+        function renderJournal() {
+            const filteredStudents = getFilteredStudents();
+            const works = journalData.works;
+            
+            if (filteredStudents.length === 0) {
+                document.getElementById('groupInfo').innerHTML = '<div class="group-stats">Нет студентов в этой группе</div>';
+                document.getElementById('tableHeader').innerHTML = '';
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="2">Нет студентов в этой группе</td></tr>';
+                return;
+            }
+            
+            // Статистика группы
+            const stats = getGroupStats(filteredStudents);
+            const groupName = currentGroup === 'all' ? 'Все группы' : currentGroup;
+            document.getElementById('groupInfo').innerHTML = `
+                <div><strong>${groupName}</strong></div>
+                <div class="group-stats">
+                    <span class="group-stat">📊 Средний рейтинг: ${stats.avgRating}</span>
+                    <span class="group-stat">📈 Посещаемость: ${stats.avgAttendance}</span>
+                    <span class="group-stat">📝 Средний балл: ${stats.avgGrade}</span>
+                    <span class="group-stat">👨‍🎓 Студентов: ${stats.count}</span>
+                </div>
+            `;
+            
+            // Формируем заголовки таблицы
+            let headerHtml = `
+                <tr>
+                    <th style="min-width: 120px; position: sticky; left: 0; z-index: 2;">Студент</th>
+                    <th style="min-width: 80px;">Группа</th>
+            `;
+            
+            works.forEach(work => {
+                headerHtml += `<th style="min-width: 60px;">${work.name}<br><small>(${work.maxScore} баллов)</small></th>`;
+            });
+            
+            headerHtml += `
+                    <th style="min-width: 70px;">Средний<br>балл</th>
+                    <th style="min-width: 70px;">Посещае-<br>мость</th>
+                    <th style="min-width: 70px;">Рейтинг</th>
+                </tr>
+            `;
+            document.getElementById('tableHeader').innerHTML = headerHtml;
+            
+            // Формируем строки студентов
+            let bodyHtml = '';
+            
+            filteredStudents.forEach(student => {
+                // Рассчитываем средний балл за работы
+                let totalScore = 0;
+                let maxTotalScore = 0;
+                
+                works.forEach(work => {
+                    const grade = student.grades[work.id] || 0;
+                    totalScore += grade;
+                    maxTotalScore += work.maxScore;
+                });
+                const avgGrade = maxTotalScore > 0 ? (totalScore / maxTotalScore * 100).toFixed(1) : 0;
+                
+                bodyHtml += `<tr>`;
+                bodyHtml += `<td class="student-name-cell" style="position: sticky; left: 0; background: white; font-weight: 600;">${student.name}</td>`;
+                bodyHtml += `<td>${student.group}</td>`;
+                
+                works.forEach(work => {
+                    const grade = student.grades[work.id] || 0;
+                    const isPass = grade >= work.passScore;
+                    let gradeClass = '';
+                    if (grade > 0) {
+                        gradeClass = isPass ? 'grade-pass' : 'grade-fail';
+                    }
+                    bodyHtml += `<td class="grade-cell"><span class="grade-input ${gradeClass}">${grade || '—'}</span></td>`;
+                });
+                
+                bodyHtml += `<td><strong>${avgGrade}%</strong></td>`;
+                
+                let attendanceClass = student.attendance >= 75 ? 'grade-pass' : 'grade-fail';
+                bodyHtml += `<td><span class="${attendanceClass}" style="padding: 3px 8px; border-radius: 12px;">${student.attendance}%</span></td>`;
+                bodyHtml += `<td class="rating-cell"><strong>${student.rating}</strong></td>`;
+                bodyHtml += `</tr>`;
+            });
+            
+            // Добавляем строку со средними значениями по группе
+            bodyHtml += `<tr class="avg-row">`;
+            bodyHtml += `<td class="student-name-cell" style="position: sticky; left: 0;"><strong>📊 Среднее по группе</strong></td>`;
+            bodyHtml += `<td>—</td>`;
+            
+            works.forEach(work => {
+                let workSum = 0;
+                let workCount = 0;
+                filteredStudents.forEach(student => {
+                    const grade = student.grades[work.id] || 0;
+                    if (grade > 0) {
+                        workSum += grade;
+                        workCount++;
+                    }
+                });
+                const workAvg = workCount > 0 ? (workSum / workCount).toFixed(1) : '—';
+                bodyHtml += `<td><strong>${workAvg}</strong></td>`;
+            });
+            
+            bodyHtml += `<td><strong>${stats.avgGrade}%</strong></td>`;
+            bodyHtml += `<td><strong>${stats.avgAttendance}</strong></td>`;
+            bodyHtml += `<td><strong>${stats.avgRating}</strong></td>`;
+            bodyHtml += `</tr>`;
+            
+            document.getElementById('tableBody').innerHTML = bodyHtml;
+        }
+
+        loadData();
+        setInterval(loadData, 60000); // Обновление каждую минуту
+    </script>
+</body>
+</html>
