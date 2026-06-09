@@ -1,1 +1,89 @@
-
+{
+  "works": [
+    { "id": "work1", "name": "Лабораторная №1", "maxScore": 10, "passScore": 6 },
+    { "id": "work2", "name": "Лабораторная №2", "maxScore": 10, "passScore": 6 },
+    { "id": "work3", "name": "Курсовая работа", "maxScore": 20, "passScore": 12 },
+    { "id": "work4", "name": "Тестирование", "maxScore": 15, "passScore": 9 },
+    { "id": "work5", "name": "Проект", "maxScore": 15, "passScore": 9 }
+  ],
+  "students": [
+    {
+      "name": "Иванов Иван",
+      "group": "ПИ-101",
+      "attendance": 95,
+      "grades": {
+        "work1": 8,
+        "work2": 9,
+        "work3": 15,
+        "work4": 12,
+        "work5": 14
+      },
+      "rating": 87.5
+    },
+    {
+      "name": "Петрова Анна",
+      "group": "ПИ-101",
+      "attendance": 98,
+      "grades": {
+        "work1": 10,
+        "work2": 10,
+        "work3": 18,
+        "work4": 14,
+        "work5": 15
+      },
+      "rating": 94.2
+    },
+    {
+      "name": "Сидоров Сергей",
+      "group": "ПИ-102",
+      "attendance": 82,
+      "grades": {
+        "work1": 6,
+        "work2": 5,
+        "work3": 10,
+        "work4": 8,
+        "work5": 7
+      },
+      "rating": 72.8
+    },
+    {
+      "name": "Козлова Мария",
+      "group": "ПИ-101",
+      "attendance": 100,
+      "grades": {
+        "work1": 10,
+        "work2": 10,
+        "work3": 20,
+        "work4": 15,
+        "work5": 15
+      },
+      "rating": 98.5
+    },
+    {
+      "name": "Смирнов Алексей",
+      "group": "ПИ-102",
+      "attendance": 70,
+      "grades": {
+        "work1": 4,
+        "work2": 3,
+        "work3": 8,
+        "work4": 5,
+        "work5": 4
+      },
+      "rating": 58.3
+    },
+    {
+      "name": "Васильева Елена",
+      "group": "ИС-201",
+      "attendance": 88,
+      "grades": {
+        "work1": 7,
+        "work2": 8,
+        "work3": 14,
+        "work4": 10,
+        "work5": 11
+      },
+      "rating": 78.4
+    }
+  ]
+}
