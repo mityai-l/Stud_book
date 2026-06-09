@@ -66,10 +66,6 @@
             letter-spacing: 1px;
         }
 
-        .header-text {
-            text-align: left;
-        }
-
         .header-text h1 {
             font-size: 1.8em;
             margin-bottom: 5px;
@@ -87,7 +83,6 @@
             font-size: 0.9em;
         }
 
-        /* Дашборд */
         .dashboard {
             padding: 25px 30px;
             background: #F8F4FF;
@@ -107,12 +102,11 @@
             text-align: center;
             box-shadow: 0 2px 8px rgba(107, 33, 168, 0.1);
             border: 1px solid #E9D5FF;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
 
         .stat-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(107, 33, 168, 0.15);
         }
 
         .stat-card h3 {
@@ -128,7 +122,6 @@
             color: #4C1D95;
         }
 
-        /* Вкладки */
         .tabs {
             display: flex;
             gap: 5px;
@@ -152,7 +145,6 @@
 
         .tab:hover {
             background: #DDD6FE;
-            color: #4C1D95;
         }
 
         .tab.active {
@@ -161,7 +153,6 @@
             border-bottom: 2px solid white;
         }
 
-        /* Информация о группе */
         .group-info {
             display: flex;
             justify-content: space-between;
@@ -188,7 +179,6 @@
             font-weight: 500;
         }
 
-        /* Таблица */
         .table-wrapper {
             overflow-x: auto;
             padding: 20px 30px 30px 30px;
@@ -225,13 +215,6 @@
             text-align: left;
             font-weight: 600;
             color: #4C1D95;
-        }
-
-        .student-name-cell {
-            position: sticky;
-            left: 0;
-            background: white;
-            z-index: 1;
         }
 
         tr:hover td {
@@ -307,15 +290,11 @@
         }
 
         @media (max-width: 768px) {
-            body { padding: 10px; }
             .header { flex-direction: column; text-align: center; }
             .header-left { justify-content: center; }
             .header-text h1 { font-size: 1.3em; }
             th, td { font-size: 0.7em; padding: 6px 3px; }
-            .tabs { padding: 10px 15px 0 15px; }
             .tab { padding: 6px 12px; font-size: 0.75em; }
-            .group-info { padding: 10px 15px; flex-direction: column; align-items: flex-start; }
-            .table-wrapper { padding: 15px; }
             .stat-card .value { font-size: 1.3em; }
         }
     </style>
@@ -389,7 +368,7 @@
                 <div class="legend-item"><span>🟠 50-74%</span><span>— средняя посещаемость</span></div>
                 <div class="legend-item"><span>🔴 0-49%</span><span>— низкая посещаемость</span></div>
             </div>
-            <p style="margin-top: 12px;">🏅 Рейтинг = (успеваемость × 0.7) + (посещаемость × 0.3)</p>
+            <p style="margin-top: 12px;">⭐ Рейтинг = (средний балл за работы) — опоздания НЕ влияют на рейтинг</p>
             <p style="margin-top: 5px; font-size: 0.8em;">ГБПОУ Колледж Автоматизации и Информационных Технологий №20</p>
         </div>
     </div>
@@ -400,10 +379,20 @@
         let currentGroup = 'all';
         let groups = [];
 
-        function calcAttendance(lessons) {
+        // ========== ФУНКЦИИ ПОСЕЩАЕМОСТИ ==========
+        
+        // Для ОТОБРАЖЕНИЯ в журнале (считаем и опоздания как присутствие)
+        function calcAttendanceDisplay(lessons) {
             if (!lessons || lessons.length === 0) return 100;
             const present = lessons.filter(l => l.status === 'present' || l.status === 'late').length;
             return Math.round((present / lessons.length) * 100);
+        }
+        
+        // Для РЕЙТИНГА (опоздания НЕ считаются как присутствие)
+        function calcAttendanceForRating(lessons) {
+            if (!lessons || lessons.length === 0) return 100;
+            const presentOnly = lessons.filter(l => l.status === 'present').length;
+            return Math.round((presentOnly / lessons.length) * 100);
         }
 
         function getAttendanceClass(percent) {
@@ -412,6 +401,8 @@
             return 'attendance-low';
         }
 
+        // ========== РАСЧЕТ РЕЙТИНГА ==========
+        // Рейтинг считается ТОЛЬКО по успеваемости (опоздания НЕ влияют)
         function calcRating(student) {
             let totalScore = 0;
             let maxTotalScore = 0;
@@ -420,8 +411,8 @@
                 maxTotalScore += work.maxScore;
             });
             const avgGrade = maxTotalScore > 0 ? (totalScore / maxTotalScore * 100) : 0;
-            const attendance = calcAttendance(student.lessons);
-            return Math.round((avgGrade * 0.7 + attendance * 0.3) * 10) / 10;
+            // Рейтинг = только успеваемость (опоздания не учитываются)
+            return Math.round(avgGrade * 10) / 10;
         }
 
         async function loadData() {
@@ -445,7 +436,7 @@
             } catch (error) {
                 console.error('Ошибка загрузки:', error);
                 document.getElementById('tableBody').innerHTML = 
-                    '<tr><td colspan="10" style="text-align: center; color: #C62828; padding: 40px;">⚠️ Данные временно недоступны. Пожалуйста, проверьте позже.</td></tr>';
+                    '<tr><td colspan="10" style="text-align: center; color: #C62828; padding: 40px;">⚠️ Данные временно недоступны. Пожалуйста, проверьте позже. Просечан<tr>';
             }
         }
 
@@ -457,7 +448,7 @@
             let totalAttendance = 0;
             students.forEach(s => {
                 totalRating += s.rating;
-                totalAttendance += calcAttendance(s.lessons);
+                totalAttendance += calcAttendanceDisplay(s.lessons);
             });
             document.getElementById('avgRating').textContent = (totalRating / students.length).toFixed(1);
             document.getElementById('avgAttendance').textContent = Math.round(totalAttendance / students.length) + '%';
@@ -522,25 +513,26 @@
             let totalAttendance = 0;
             filtered.forEach(s => {
                 totalRating += s.rating;
-                totalAttendance += calcAttendance(s.lessons);
+                totalAttendance += calcAttendanceDisplay(s.lessons);
             });
             
             document.getElementById('groupInfo').innerHTML = `
                 <div><strong>${groupName}</strong></div>
                 <div class="group-stats">
-                    <span class="group-stat">📊 Средний рейтинг: ${(totalRating/filtered.length).toFixed(1)}</span>
+                    <span class="group-stat">⭐ Средний рейтинг: ${(totalRating/filtered.length).toFixed(1)}</span>
                     <span class="group-stat">📈 Средняя посещаемость: ${Math.round(totalAttendance/filtered.length)}%</span>
                 </div>
             `;
             
-            // Только практические работы (без курсовой)
+            // Заголовки таблицы
             let headerHtml = `<tr><th style="min-width: 160px;">Студент</th><th style="min-width: 80px;">Группа</th>`;
             works.forEach(work => {
                 headerHtml += `<th>${work.name}<br><small>${work.maxScore} б.</small></th>`;
             });
-            headerHtml += `<th>Посещаемость</th><th>Рейтинг</th></tr>`;
+            headerHtml += `<th>Посещаемость</th><th>Рейтинг<br><span style="font-size: 10px;">(только успеваемость)</span></th></tr>`;
             document.getElementById('tableHeader').innerHTML = headerHtml;
             
+            // Строки студентов
             let bodyHtml = '';
             filtered.forEach(student => {
                 bodyHtml += `<tr>`;
@@ -554,12 +546,17 @@
                     bodyHtml += `<td><span class="${gradeClass}">${grade || '—'}</span></td>`;
                 });
                 
-                const attendance = calcAttendance(student.lessons);
+                const attendance = calcAttendanceDisplay(student.lessons);
                 const attendanceClass = getAttendanceClass(attendance);
                 bodyHtml += `<td><span class="${attendanceClass}">${attendance}%</span></td>`;
                 bodyHtml += `<td class="rating-cell"><strong>${student.rating}</strong></td>`;
                 bodyHtml += `</tr>`;
             });
+            
+            // Пояснительная строка
+            bodyHtml += `<tr style="background: #F3E8FF;"><td colspan="${works.length + 3}" style="text-align: center; font-size: 12px; color: #6D28D9;">
+                📌 Рейтинг рассчитывается ТОЛЬКО по успеваемости (средний балл за работы). Опоздания НЕ снижают рейтинг.
+            </td></tr>`;
             
             document.getElementById('tableBody').innerHTML = bodyHtml;
         }
