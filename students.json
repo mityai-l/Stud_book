@@ -1,97 +1,288 @@
 {
   "disciplines": [
-    { "id": "IT", "name": "Информационные технологии" },
-    { "id": "MDK04", "name": "МДК 04.01" },
-    { "id": "UP04", "name": "УП.04" },
-    { "id": "OPBD", "name": "ОПБД" }
+    {
+      "id": "IT",
+      "name": "Информационные технологии"
+    },
+    {
+      "id": "MDK04",
+      "name": "МДК 04.01"
+    },
+    {
+      "id": "UP04",
+      "name": "УП.04"
+    },
+    {
+      "id": "OPBD",
+      "name": "ОПБД"
+    }
   ],
   "groupDisciplines": {
-    "ИСП211": ["IT", "MDK04", "UP04"],
-    "ИСП231": ["IT", "MDK04", "UP04"],
-    "ИСП251": ["MDK04", "UP04"],
-    "ИСП271": ["MDK04", "UP04"],
-    "ИСП291": ["OPBD", "IT"],
-    "ИСП2111": ["IT"],
-    "ИСП2131": ["IT"],
-    "ИСП2151": ["IT"],
-    "ИСП2191": ["IT"],
-    "ИСП2311": ["IT"],
-    "ИСП2331": ["OPBD"],
-    "ИСП2351": ["OPBD"]
+    "ИСП211": [
+      "IT",
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП231": [
+      "IT",
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП251": [
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП271": [
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП291": [
+      "OPBD",
+      "IT"
+    ],
+    "ИСП2111": [
+      "IT"
+    ],
+    "ИСП2131": [
+      "IT"
+    ],
+    "ИСП2151": [
+      "IT"
+    ],
+    "ИСП2191": [
+      "IT"
+    ],
+    "ИСП2311": [
+      "IT"
+    ],
+    "ИСП2331": [
+      "OPBD"
+    ],
+    "ИСП2351": [
+      "OPBD"
+    ]
   },
   "works": [
-    { "id": "work1", "name": "Лабораторная №1", "discipline": "IT", "maxScore": 10, "passScore": 6 },
-    { "id": "work2", "name": "Лабораторная №2", "discipline": "IT", "maxScore": 10, "passScore": 6 },
-    { "id": "work3", "name": "Практическая работа", "discipline": "MDK04", "maxScore": 15, "passScore": 9 },
-    { "id": "work4", "name": "Курсовая работа", "discipline": "MDK04", "maxScore": 20, "passScore": 12 },
-    { "id": "work5", "name": "Отчет по практике", "discipline": "UP04", "maxScore": 15, "passScore": 9 },
-    { "id": "work6", "name": "Лабораторная №1", "discipline": "OPBD", "maxScore": 10, "passScore": 6 },
-    { "id": "work7", "name": "Лабораторная №2", "discipline": "OPBD", "maxScore": 10, "passScore": 6 }
+    {
+      "id": "work1",
+      "name": "Лабораторная №1",
+      "discipline": "IT",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work2",
+      "name": "Лабораторная №2",
+      "discipline": "IT",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work3",
+      "name": "Практическая работа",
+      "discipline": "MDK04",
+      "maxScore": 15,
+      "passScore": 9
+    },
+    {
+      "id": "work4",
+      "name": "Курсовая работа",
+      "discipline": "MDK04",
+      "maxScore": 20,
+      "passScore": 12
+    },
+    {
+      "id": "work5",
+      "name": "Отчет по практике",
+      "discipline": "UP04",
+      "maxScore": 15,
+      "passScore": 9
+    },
+    {
+      "id": "work6",
+      "name": "Лабораторная №1",
+      "discipline": "OPBD",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work7",
+      "name": "Лабораторная №2",
+      "discipline": "OPBD",
+      "maxScore": 10,
+      "passScore": 6
+    }
   ],
   "students": [
     {
       "name": "Иванов Иван",
       "group": "ИСП211",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "present" },
-        { "date": "2024-02-15", "status": "late" },
-        { "date": "2024-02-22", "status": "present" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work1": 8, "work2": 9, "work3": 12, "work4": 15, "work5": 13 },
-      "rating": 0
+      "grades": {
+        "work1": 8,
+        "work2": 9,
+        "work3": 12,
+        "work4": 15,
+        "work5": 13
+      },
+      "rating": 68.3
     },
     {
       "name": "Петрова Анна",
       "group": "ИСП211",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "present" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "present" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work1": 10, "work2": 10, "work3": 14, "work4": 18, "work5": 15 },
-      "rating": 0
+      "grades": {
+        "work1": 10,
+        "work2": 10,
+        "work3": 14,
+        "work4": 18,
+        "work5": 15
+      },
+      "rating": 82.1
     },
     {
       "name": "Сидоров Сергей",
       "group": "ИСП251",
       "lessons": [
-        { "date": "2024-02-01", "status": "late" },
-        { "date": "2024-02-08", "status": "absent" },
-        { "date": "2024-02-15", "status": "late" },
-        { "date": "2024-02-22", "status": "present" },
-        { "date": "2024-02-29", "status": "absent" }
+        {
+          "date": "2024-02-01",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "absent"
+        }
       ],
-      "grades": { "work3": 7, "work4": 10, "work5": 8 },
-      "rating": 0
+      "grades": {
+        "work3": 7,
+        "work4": 10,
+        "work5": 8
+      },
+      "rating": 25.4
     },
     {
       "name": "Козлова Мария",
       "group": "ИСП291",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "present" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "present" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work1": 9, "work2": 8, "work6": 10, "work7": 9 },
-      "rating": 0
+      "grades": {
+        "work1": 9,
+        "work2": 8,
+        "work6": 10,
+        "work7": 9
+      },
+      "rating": 58
     },
     {
       "name": "Смирнов Алексей",
       "group": "ИСП2331",
       "lessons": [
-        { "date": "2024-02-01", "status": "present" },
-        { "date": "2024-02-08", "status": "absent" },
-        { "date": "2024-02-15", "status": "present" },
-        { "date": "2024-02-22", "status": "absent" },
-        { "date": "2024-02-29", "status": "present" }
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
       ],
-      "grades": { "work6": 7, "work7": 8 },
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Петров Илья",
+      "group": "ИСП211",
+      "lessons": [],
+      "grades": {},
       "rating": 0
     }
   ]
