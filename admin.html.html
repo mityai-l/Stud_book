@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | Локальная</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0edf5; min-height: 100vh; }
+        
+        .admin-nav {
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .admin-nav .logo { display: flex; align-items: center; gap: 12px; font-size: 1.3em; font-weight: 700; }
+        .admin-nav .logo span { color: #a78bfa; }
+        .admin-nav .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+        .admin-nav .nav-links button {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #d4c4f0;
+            padding: 8px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .admin-nav .nav-links button:hover { background: rgba(255,255,255,0.2); color: white; }
+        .admin-nav .nav-links button.active { background: #7c3aed; color: white; }
+        .admin-nav .user-info { display: flex; align-items: center; gap: 15px; font-size: 0.9em; }
+        .admin-nav .user-info .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #7c3aed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .admin-content { max-width: 1600px; margin: 20px auto; padding: 0 20px 40px; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .stat-card {
+            background: white;
+            padding: 18px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-left: 4px solid #7c3aed;
+        }
+        .stat-card .label { font-size: 0.8em; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card .value { font-size: 1.8em; font-weight: 700; color: #1a0a2e; margin-top: 4px; }
+        
+        .action-bar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .action-bar input, .action-bar select {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9em;
+            background: #fafafa;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .action-bar input:focus, .action-bar select:focus { border-color: #7c3aed; }
+        .action-bar .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-primary { background: #7c3aed; color: white; }
+        .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-warning { background: #f59e0b; color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-info { background: #3b82f6; color: white; }
+        .btn-info:hover { background: #2563eb; }
+        .btn-secondary { background: #6b7280; color: white; }
+        .btn-secondary:hover { background: #4b5563; }
+        
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+            overflow-x: auto;
+        }
+        .table-container table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        .table-container th {
+            background: #f8f5ff;
+            color: #1a0a2e;
+            padding: 12px 14px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e5d9f5;
+            white-space: nowrap;
+        }
+        .table-container td { padding: 10px 14px; border-bottom: 1px solid #f0edf5; vertical-align: middle; }
+        .table-container tr:hover td { background: #faf8ff; }
+        .table-container .actions-cell { display: flex; gap: 6px; flex-wrap: wrap; }
+        .table-container .actions-cell button {
+            padding: 4px 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .table-container .actions-cell .edit-btn { background: #e0e7ff; color: #4338ca; }
+        .table-container .actions-cell .edit-btn:hover { background: #c7d2fe; }
+        .table-container .actions-cell .delete-btn { background: #fee2e2; color: #dc2626; }
+        .table-container .actions-cell .delete-btn:hover { background: #fecaca; }
+        
+        .badge-status {
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+        .badge-present { background: #d1fae5; color: #065f46; }
+        .badge-absent { background: #fee2e2; color: #991b1b; }
+        .badge-late { background: #fef3c7; color: #92400e; }
+        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalIn 0.3s ease;
+        }
+        @keyframes modalIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal h2 { margin-bottom: 20px; color: #1a0a2e; }
+        .modal .form-group { margin-bottom: 16px; }
+        .modal .form-group label { display: block; font-weight: 600; font-size: 0.85em; color: #555; margin-bottom: 4px; }
+        .modal .form-group input, .modal .form-group select, .modal .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.95em;
+            background: #fafafa;
+            outline: none;
+            transition: border 0.3s;
+        }
+        .modal .form-group input:focus, .modal .form-group select:focus, .modal .form-group textarea:focus {
+            border-color: #7c3aed;
+        }
+        .modal .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .modal .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        .modal .modal-actions .btn { padding: 10px 28px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .modal .modal-actions .btn-cancel { background: #f3f4f6; color: #555; }
+        .modal .modal-actions .btn-cancel:hover { background: #e5e7eb; }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1a0a2e;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: #10b981; }
+        .toast.error { background: #ef4444; }
+        .toast.info { background: #3b82f6; }
+        
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+        
+        .github-config {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .github-config input {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9em;
+            flex: 1;
+            min-width: 200px;
+            background: #fafafa;
+            outline: none;
+        }
+        .github-config input:focus { border-color: #7c3aed; }
+        .github-config .status { font-size: 0.85em; color: #666; }
+        .github-config .status .connected { color: #10b981; font-weight: 600; }
+        .github-config .status .disconnected { color: #ef4444; font-weight: 600; }
+        
+        .local-actions {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            padding: 15px 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .local-actions .hint { font-size: 0.85em; color: #166534; }
+        
+        @media (max-width: 768px) {
+            .admin-nav { padding: 12px 16px; flex-direction: column; align-items: stretch; }
+            .admin-nav .nav-links { justify-content: center; }
+            .admin-nav .user-info { justify-content: center; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .modal .form-row { grid-template-columns: 1fr; }
+            .action-bar { flex-direction: column; align-items: stretch; }
+            .action-bar input, .action-bar select, .action-bar .btn { width: 100%; }
+            .table-container th, .table-container td { font-size: 0.75em; padding: 6px 8px; }
+            .github-config { flex-direction: column; align-items: stretch; }
+            .github-config input { width: 100%; }
+            .local-actions { flex-direction: column; align-items: stretch; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .admin-nav .nav-links button { font-size: 0.75em; padding: 5px 12px; }
+        }
+        
+        /* Стиль для пароля */
+        .password-protect {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .password-protect input {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 0.9em;
+            background: #fafafa;
+            outline: none;
+        }
+        .password-protect input:focus { border-color: #7c3aed; }
+        .password-protect .status {
+            font-size: 0.85em;
+            color: #666;
+        }
+        .password-protect .status .locked { color: #ef4444; font-weight: 600; }
+        .password-protect .status .unlocked { color: #10b981; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav class="admin-nav">
+        <div class="logo">🔒 <span>Admin</span>Panel <span style="font-size:0.6em;opacity:0.7;">(Локальная)</span></div>
+        <div class="nav-links">
+            <button class="active" data-tab="students">👨‍🎓 Студенты</button>
+            <button data-tab="works">📝 Работы</button>
+            <button data-tab="groups">👥 Группы</button>
+            <button data-tab="attendance">📊 Посещаемость</button>
+        </div>
+        <div class="user-info">
+            <span id="connectionStatus">🔒 Локально</span>
+            <div class="avatar">A</div>
+        </div>
+    </nav>
+
+    <div class="admin-content">
+        <!-- Защита паролем -->
+        <div class="password-protect">
+            <span style="font-weight:600;color:#1a0a2e;">🔑 Пароль:</span>
+            <input type="password" id="adminPassword" placeholder="Введите пароль для доступа" value="admin123">
+            <button class="btn btn-primary" onclick="checkPassword()">🔓 Войти</button>
+            <span class="status" id="passwordStatus">🔒 <span class="locked">Заблокировано</span></span>
+            <span style="font-size:0.75em;color:#888;margin-left:10px;">(пароль по умолчанию: admin123)</span>
+        </div>
+
+        <!-- Подключение к GitHub -->
+        <div class="github-config">
+            <span style="font-weight:600;color:#1a0a2e;">🔗 GitHub:</span>
+            <input type="text" id="githubUrl" placeholder="https://raw.githubusercontent.com/username/repo/main/students.json" value="https://raw.githubusercontent.com/mityai-l/Stud_book/main/students.json">
+            <button class="btn btn-info" onclick="loadFromGitHub()">📥 Загрузить с GitHub</button>
+            <button class="btn btn-success" onclick="saveToGitHub()">📤 Сохранить в GitHub</button>
+            <span class="status" id="githubStatus">⚪ Не подключено</span>
+        </div>
+
+        <!-- Локальные действия -->
+        <div class="local-actions">
+            <span style="font-weight:600;color:#166534;">💾 Локально:</span>
+            <button class="btn btn-secondary" onclick="saveLocal()">💾 Сохранить локально</button>
+            <button class="btn btn-warning" onclick="loadLocal()">📂 Загрузить локально</button>
+            <button class="btn btn-info" onclick="exportData()">📤 Экспорт JSON</button>
+            <button class="btn btn-success" onclick="document.getElementById('importFile').click()">📥 Импорт JSON</button>
+            <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)">
+            <span class="hint">💡 Файл сохраняется в папке с админ-панелью</span>
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-grid" id="adminStats">
+            <div class="stat-card"><div class="label">👨‍🎓 Студентов</div><div class="value" id="statStudents">0</div></div>
+            <div class="stat-card"><div class="label">📝 Работ</div><div class="value" id="statWorks">0</div></div>
+            <div class="stat-card"><div class="label">👥 Групп</div><div class="value" id="statGroups">0</div></div>
+            <div class="stat-card"><div class="label">📈 Средний рейтинг</div><div class="value" id="statAvgRating">0</div></div>
+        </div>
+
+        <!-- Вкладка: Студенты -->
+        <div class="tab-content active" id="tab-students">
+            <div class="action-bar">
+                <input type="text" placeholder="Поиск по имени..." id="studentSearch" oninput="renderStudents()">
+                <select id="groupFilter" onchange="renderStudents()"><option value="all">Все группы</option></select>
+                <button class="btn btn-primary" onclick="openStudentModal()">➕ Добавить студента</button>
+                <button class="btn btn-success" onclick="recalcAllRatings()">🔄 Пересчитать рейтинг</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>#</th><th>ФИО</th><th>Группа</th><th>Рейтинг</th><th>Посещаемость</th><th>Работ сдано</th><th>Действия</th></tr></thead>
+                    <tbody id="studentsTableBody"><tr><td colspan="7" class="empty-state">Загрузка...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Вкладка: Работы -->
+        <div class="tab-content" id="tab-works">
+            <div class="action-bar">
+                <select id="workDisciplineFilter" onchange="renderWorks()"><option value="all">Все дисциплины</option></select>
+                <button class="btn btn-primary" onclick="openWorkModal()">➕ Добавить работу</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>ID</th><th>Название</th><th>Дисциплина</th><th>Макс. балл</th><th>Порог</th><th>Действия</th></tr></thead>
+                    <tbody id="worksTableBody"><tr><td colspan="6" class="empty-state">Загрузка...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Вкладка: Группы -->
+        <div class="tab-content" id="tab-groups">
+            <div class="action-bar">
+                <button class="btn btn-primary" onclick="openGroupModal()">➕ Добавить группу</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Название</th><th>Дисциплины</th><th>Студентов</th><th>Действия</th></tr></thead>
+                    <tbody id="groupsTableBody"><tr><td colspan="4" class="empty-state">Загрузка...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Вкладка: Посещаемость -->
+        <div class="tab-content" id="tab-attendance">
+            <div class="action-bar">
+                <select id="attendanceGroupFilter" onchange="renderAttendance()"><option value="all">Все группы</option></select>
+                <input type="date" id="attendanceDate" onchange="renderAttendance()">
+                <button class="btn btn-primary" onclick="markAllPresent()">✅ Отметить всех</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Студент</th><th>Группа</th><th>Дата</th><th>Статус</th><th>Действия</th></tr></thead>
+                    <tbody id="attendanceTableBody"><tr><td colspan="5" class="empty-state">Загрузка...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div class="modal-overlay" id="studentModal">
+        <div class="modal">
+            <h2 id="studentModalTitle">👨‍🎓 Добавить студента</h2>
+            <input type="hidden" id="editStudentIndex">
+            <div class="form-group"><label>ФИО</label><input type="text" id="studentName" placeholder="Иванов Иван Иванович"></div>
+            <div class="form-group"><label>Группа</label><select id="studentGroup"></select></div>
+            <div class="form-group"><label>Оценки (формат: workId:балл, через запятую)</label><input type="text" id="studentGrades" placeholder="work1:8, work2:9, work3:12"></div>
+            <div class="modal-actions"><button class="btn btn-cancel" onclick="closeModal('studentModal')">Отмена</button><button class="btn btn-primary" onclick="saveStudent()">💾 Сохранить</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="workModal">
+        <div class="modal">
+            <h2 id="workModalTitle">📝 Добавить работу</h2>
+            <input type="hidden" id="editWorkIndex">
+            <div class="form-group"><label>Название</label><input type="text" id="workName" placeholder="Лабораторная №1"></div>
+            <div class="form-group"><label>Дисциплина</label><select id="workDiscipline"></select></div>
+            <div class="form-row"><div class="form-group"><label>Максимальный балл</label><input type="number" id="workMaxScore" value="10"></div><div class="form-group"><label>Порог сдачи</label><input type="number" id="workPassScore" value="6"></div></div>
+            <div class="modal-actions"><button class="btn btn-cancel" onclick="closeModal('workModal')">Отмена</button><button class="btn btn-primary" onclick="saveWork()">💾 Сохранить</button></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="groupModal">
+        <div class="modal">
+            <h2>👥 Добавить группу</h2>
+            <div class="form-group"><label>Название группы</label><input type="text" id="groupName" placeholder="ИСП211"></div>
+            <div class="form-group"><label>Дисциплины (выберите из списка)</label><select id="groupDisciplinesSelect" multiple style="height:100px;"></select><small style="color:#888;">Удерживайте Ctrl для множественного выбора</small></div>
+            <div class="modal-actions"><button class="btn btn-cancel" onclick="closeModal('groupModal')">Отмена</button><button class="btn btn-primary" onclick="saveGroup()">💾 Сохранить</button></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        //  ПАРОЛЬ
+        // ============================================================
+        let isAuthorized = false;
+        const DEFAULT_PASSWORD = 'admin123';
+
+        function checkPassword() {
+            const input = document.getElementById('adminPassword').value;
+            if (input === DEFAULT_PASSWORD) {
+                isAuthorized = true;
+                document.getElementById('passwordStatus').innerHTML = '🔓 <span class="unlocked">Разблокировано</span>';
+                showToast('Доступ разрешён!', 'success');
+                // Показываем интерфейс
+                document.querySelectorAll('.github-config, .local-actions, .stats-grid, .tab-content').forEach(el => {
+                    el.style.display = 'flex';
+                });
+                // Скрываем подсказку о пароле
+                document.querySelector('.password-protect .status').style.display = 'none';
+                document.querySelector('.password-protect input').style.display = 'none';
+                document.querySelector('.password-protect .btn').style.display = 'none';
+                document.querySelector('.password-protect span:last-child').style.display = 'none';
+                document.querySelector('.password-protect span:first-child').textContent = '✅ Доступ открыт';
+                // Загружаем данные
+                if (!data.students.length) loadFromGitHub();
+            } else {
+                showToast('Неверный пароль!', 'error');
+            }
+        }
+
+        // Проверяем пароль при загрузке (если уже введён)
+        document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // ============================================================
+        //  ДАННЫЕ
+        // ============================================================
+        let data = { disciplines: [], groupDisciplines: {}, works: [], students: [] };
+        let nextWorkId = 1;
+        let editingStudentIndex = null, editingWorkIndex = null;
+        let githubUrl = '';
+
+        // ============================================================
+        //  РАБОТА С GITHUB
+        // ============================================================
+        function loadFromGitHub() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const url = document.getElementById('githubUrl').value.trim();
+            if (!url) { showToast('Введите URL к файлу на GitHub', 'error'); return; }
+            let finalUrl = url;
+            if (!url.includes('raw.githubusercontent.com')) {
+                const match = url.match(/github\.com\/([^\/]+)\/([^\/]+)\/blob\/(.+)/);
+                if (match) finalUrl = `https://raw.githubusercontent.com/${match[1]}/${match[2]}/${match[3]}`;
+                else { showToast('Используйте RAW URL: https://raw.githubusercontent.com/...', 'error'); return; }
+            }
+            githubUrl = finalUrl;
+            document.getElementById('githubStatus').innerHTML = '⏳ Загрузка...';
+
+            fetch(finalUrl + '?t=' + Date.now())
+                .then(response => { if (!response.ok) throw new Error(`HTTP ${response.status}`); return response.json(); })
+                .then(json => {
+                    data = json;
+                    data.students.forEach(s => s.rating = calcRating(s));
+                    nextWorkId = Math.max(0, ...data.works.map(w => parseInt(w.id.replace('work','')) || 0)) + 1;
+                    initSelects();
+                    renderAll();
+                    document.getElementById('githubStatus').innerHTML = '✅ <span class="connected">Подключено</span>';
+                    showToast('Данные загружены с GitHub', 'success');
+                })
+                .catch(error => {
+                    console.error('Ошибка загрузки:', error);
+                    document.getElementById('githubStatus').innerHTML = '❌ <span class="disconnected">Ошибка: ' + error.message + '</span>';
+                    showToast('Ошибка загрузки: ' + error.message, 'error');
+                });
+        }
+
+        function saveToGitHub() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'students.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('📥 Файл students.json скачан. Загрузите его в репозиторий GitHub вручную.', 'info');
+        }
+
+        // ============================================================
+        //  ЛОКАЛЬНОЕ СОХРАНЕНИЕ
+        // ============================================================
+        function saveLocal() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'students_local.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('💾 Данные сохранены локально как students_local.json', 'success');
+        }
+
+        function loadLocal() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            document.getElementById('importFile').click();
+        }
+
+        // ============================================================
+        //  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // ============================================================
+        function getDisciplineName(id) {
+            const d = data.disciplines.find(d => d.id === id);
+            return d ? d.name : id;
+        }
+        function getStudentWorkCount(student) {
+            const keys = Object.keys(student.grades || {});
+            return keys.filter(k => k.startsWith('work')).length;
+        }
+        function calcAttendance(student) {
+            if (!student.lessons || student.lessons.length === 0) return 0;
+            const present = student.lessons.filter(l => l.status === 'present').length;
+            return Math.round((present / student.lessons.length) * 100);
+        }
+        function calcRating(student) {
+            const works = data.works;
+            if (works.length === 0) return 0;
+            let total = 0, maxTotal = 0;
+            works.forEach(w => { total += student.grades[w.id] || 0; maxTotal += w.maxScore; });
+            const avgGrade = maxTotal > 0 ? (total / maxTotal * 100) : 0;
+            const attendance = calcAttendance(student);
+            return Math.round((avgGrade * 0.7 + attendance * 0.3) * 10) / 10;
+        }
+        function recalcAllRatings() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            data.students.forEach(s => s.rating = calcRating(s));
+            renderStudents();
+            updateStats();
+            showToast('Рейтинг пересчитан', 'success');
+        }
+
+        // ============================================================
+        //  ИНИЦИАЛИЗАЦИЯ И РЕНДЕРИНГ
+        // ============================================================
+        function initSelects() {
+            const groups = ['all', ...new Set(data.students.map(s => s.group))];
+            const groupList = groups.filter(g => g !== 'all');
+            document.getElementById('studentGroup').innerHTML = groupList.map(g => `<option value="${g}">${g}</option>`).join('');
+            document.getElementById('groupFilter').innerHTML = `<option value="all">Все группы</option>` + groupList.map(g => `<option value="${g}">${g}</option>`).join('');
+            document.getElementById('attendanceGroupFilter').innerHTML = `<option value="all">Все группы</option>` + groupList.map(g => `<option value="${g}">${g}</option>`).join('');
+            document.getElementById('workDiscipline').innerHTML = data.disciplines.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            document.getElementById('workDisciplineFilter').innerHTML = `<option value="all">Все дисциплины</option>` + data.disciplines.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            document.getElementById('groupDisciplinesSelect').innerHTML = data.disciplines.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+            document.getElementById('attendanceDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function renderAll() { updateStats(); renderStudents(); renderWorks(); renderGroups(); renderAttendance(); }
+
+        function updateStats() {
+            document.getElementById('statStudents').textContent = data.students.length;
+            document.getElementById('statWorks').textContent = data.works.length;
+            const groups = new Set(data.students.map(s => s.group));
+            document.getElementById('statGroups').textContent = groups.size;
+            let total = 0;
+            data.students.forEach(s => total += calcRating(s));
+            document.getElementById('statAvgRating').textContent = data.students.length ? (total/data.students.length).toFixed(1) : 0;
+        }
+
+        function renderStudents() {
+            const search = document.getElementById('studentSearch').value.toLowerCase();
+            const groupFilter = document.getElementById('groupFilter').value;
+            let filtered = data.students;
+            if (search) filtered = filtered.filter(s => s.name.toLowerCase().includes(search));
+            if (groupFilter !== 'all') filtered = filtered.filter(s => s.group === groupFilter);
+            const tbody = document.getElementById('studentsTableBody');
+            if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Нет студентов</td></tr>'; return; }
+            tbody.innerHTML = filtered.map((s, i) => {
+                const idx = data.students.indexOf(s);
+                const attendance = calcAttendance(s);
+                const workCount = getStudentWorkCount(s);
+                return `<tr><td>${idx + 1}</td><td><strong>${s.name}</strong></td><td>${s.group}</td><td>${s.rating || 0}</td><td>${attendance}%</td><td>${workCount}/${data.works.length}</td><td class="actions-cell"><button class="edit-btn" onclick="editStudent(${idx})">✏️</button><button class="delete-btn" onclick="deleteStudent(${idx})">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function renderWorks() {
+            const filter = document.getElementById('workDisciplineFilter').value;
+            let filtered = data.works;
+            if (filter !== 'all') filtered = filtered.filter(w => w.discipline === filter);
+            const tbody = document.getElementById('worksTableBody');
+            if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Нет работ</td></tr>'; return; }
+            tbody.innerHTML = filtered.map((w, i) => {
+                const idx = data.works.indexOf(w);
+                return `<tr><td>${w.id}</td><td><strong>${w.name}</strong></td><td>${getDisciplineName(w.discipline)}</td><td>${w.maxScore}</td><td>${w.passScore}</td><td class="actions-cell"><button class="edit-btn" onclick="editWork(${idx})">✏️</button><button class="delete-btn" onclick="deleteWork(${idx})">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function renderGroups() {
+            const groupNames = new Set(data.students.map(s => s.group));
+            const tbody = document.getElementById('groupsTableBody');
+            if (!groupNames.size) { tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Нет групп</td></tr>'; return; }
+            tbody.innerHTML = Array.from(groupNames).map(g => {
+                const disc = data.groupDisciplines[g] || [];
+                const studentCount = data.students.filter(s => s.group === g).length;
+                return `<tr><td><strong>${g}</strong></td><td>${disc.map(d => getDisciplineName(d)).join(' • ') || '—'}</td><td>${studentCount}</td><td class="actions-cell"><button class="delete-btn" onclick="deleteGroup('${g}')">🗑️</button></td></tr>`;
+            }).join('');
+        }
+
+        function renderAttendance() {
+            const groupFilter = document.getElementById('attendanceGroupFilter').value;
+            const date = document.getElementById('attendanceDate').value;
+            let filtered = data.students;
+            if (groupFilter !== 'all') filtered = filtered.filter(s => s.group === groupFilter);
+            const tbody = document.getElementById('attendanceTableBody');
+            if (!filtered.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Нет студентов</td></tr>'; return; }
+            tbody.innerHTML = filtered.map(s => {
+                const lesson = s.lessons ? s.lessons.find(l => l.date === date) : null;
+                const status = lesson ? lesson.status : '—';
+                const statusText = status === 'present' ? '✅ Присутствовал' : status === 'late' ? '⏰ Опоздал' : status === 'absent' ? '❌ Отсутствовал' : '—';
+                const statusClass = status === 'present' ? 'badge-present' : status === 'late' ? 'badge-late' : status === 'absent' ? 'badge-absent' : '';
+                return `<tr><td><strong>${s.name}</strong></td><td>${s.group}</td><td>${date || '—'}</td><td><span class="badge-status ${statusClass}">${statusText}</span></td><td class="actions-cell"><button class="edit-btn" onclick="setAttendance('${s.name}', '${date}', 'present')">✅</button><button class="edit-btn" onclick="setAttendance('${s.name}', '${date}', 'late')">⏰</button><button class="delete-btn" onclick="setAttendance('${s.name}', '${date}', 'absent')">❌</button></td></tr>`;
+            }).join('');
+        }
+
+        // ============================================================
+        //  CRUD: СТУДЕНТЫ
+        // ============================================================
+        function openStudentModal(studentIdx = null) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const modal = document.getElementById('studentModal');
+            document.getElementById('studentModalTitle').textContent = studentIdx !== null ? '✏️ Редактировать студента' : '👨‍🎓 Добавить студента';
+            const s = (studentIdx !== null && data.students[studentIdx]) ? data.students[studentIdx] : null;
+            document.getElementById('studentName').value = s ? s.name : '';
+            document.getElementById('studentGroup').value = s ? s.group : (data.students.length ? data.students[0].group : '');
+            document.getElementById('studentGrades').value = s ? Object.entries(s.grades || {}).filter(([k,v]) => k.startsWith('work')).map(([k,v]) => `${k}:${v}`).join(', ') : '';
+            document.getElementById('editStudentIndex').value = studentIdx !== null ? studentIdx : '';
+            editingStudentIndex = studentIdx;
+            modal.classList.add('active');
+        }
+
+        function saveStudent() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const name = document.getElementById('studentName').value.trim();
+            const group = document.getElementById('studentGroup').value;
+            const gradesStr = document.getElementById('studentGrades').value.trim();
+            const idx = parseInt(document.getElementById('editStudentIndex').value);
+            if (!name) { showToast('Введите имя студента', 'error'); return; }
+            if (!group) { showToast('Выберите группу', 'error'); return; }
+            const grades = {};
+            if (gradesStr) gradesStr.split(',').forEach(pair => { const [key, val] = pair.split(':').map(s => s.trim()); if (key && val) grades[key] = parseFloat(val) || 0; });
+            if (idx !== null && !isNaN(idx) && data.students[idx]) {
+                data.students[idx].name = name;
+                data.students[idx].group = group;
+                data.students[idx].grades = grades;
+                data.students[idx].rating = calcRating(data.students[idx]);
+                showToast('Студент обновлён', 'success');
+            } else {
+                const newStudent = { name, group, lessons: [], grades: grades, rating: 0 };
+                newStudent.rating = calcRating(newStudent);
+                data.students.push(newStudent);
+                showToast('Студент добавлен', 'success');
+            }
+            closeModal('studentModal');
+            renderAll();
+            initSelects();
+        }
+
+        function editStudent(idx) { openStudentModal(idx); }
+        function deleteStudent(idx) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            if (!confirm(`Удалить студента "${data.students[idx].name}"?`)) return;
+            data.students.splice(idx, 1);
+            renderAll(); initSelects(); showToast('Студент удалён', 'success');
+        }
+
+        // ============================================================
+        //  CRUD: РАБОТЫ
+        // ============================================================
+        function openWorkModal(workIdx = null) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const modal = document.getElementById('workModal');
+            document.getElementById('workModalTitle').textContent = workIdx !== null ? '✏️ Редактировать работу' : '📝 Добавить работу';
+            const w = (workIdx !== null && data.works[workIdx]) ? data.works[workIdx] : null;
+            document.getElementById('workName').value = w ? w.name : '';
+            document.getElementById('workDiscipline').value = w ? w.discipline : (data.disciplines.length ? data.disciplines[0].id : '');
+            document.getElementById('workMaxScore').value = w ? w.maxScore : 10;
+            document.getElementById('workPassScore').value = w ? w.passScore : 6;
+            document.getElementById('editWorkIndex').value = workIdx !== null ? workIdx : '';
+            editingWorkIndex = workIdx;
+            modal.classList.add('active');
+        }
+
+        function saveWork() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const name = document.getElementById('workName').value.trim();
+            const discipline = document.getElementById('workDiscipline').value;
+            const maxScore = parseFloat(document.getElementById('workMaxScore').value);
+            const passScore = parseFloat(document.getElementById('workPassScore').value);
+            const idx = parseInt(document.getElementById('editWorkIndex').value);
+            if (!name) { showToast('Введите название работы', 'error'); return; }
+            if (!discipline) { showToast('Выберите дисциплину', 'error'); return; }
+            if (isNaN(maxScore) || maxScore <= 0) { showToast('Введите корректный макс. балл', 'error'); return; }
+            if (isNaN(passScore) || passScore < 0) { showToast('Введите корректный порог', 'error'); return; }
+            if (idx !== null && !isNaN(idx) && data.works[idx]) {
+                data.works[idx].name = name;
+                data.works[idx].discipline = discipline;
+                data.works[idx].maxScore = maxScore;
+                data.works[idx].passScore = passScore;
+                showToast('Работа обновлена', 'success');
+            } else {
+                data.works.push({ id: 'work' + nextWorkId++, name, discipline, maxScore, passScore });
+                showToast('Работа добавлена', 'success');
+            }
+            closeModal('workModal');
+            renderAll();
+        }
+
+        function editWork(idx) { openWorkModal(idx); }
+        function deleteWork(idx) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            if (!confirm(`Удалить работу "${data.works[idx].name}"?`)) return;
+            const workId = data.works[idx].id;
+            data.works.splice(idx, 1);
+            data.students.forEach(s => { if (s.grades) delete s.grades[workId]; });
+            renderAll(); showToast('Работа удалена', 'success');
+        }
+
+        // ============================================================
+        //  CRUD: ГРУППЫ
+        // ============================================================
+        function openGroupModal() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            document.getElementById('groupModal').classList.add('active');
+            document.getElementById('groupName').value = '';
+            document.getElementById('groupDisciplinesSelect').selectedIndex = -1;
+        }
+        function saveGroup() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const name = document.getElementById('groupName').value.trim();
+            const selected = Array.from(document.getElementById('groupDisciplinesSelect').selectedOptions).map(o => o.value);
+            if (!name) { showToast('Введите название группы', 'error'); return; }
+            if (data.groupDisciplines[name]) { showToast('Группа уже существует', 'error'); return; }
+            data.groupDisciplines[name] = selected;
+            showToast('Группа добавлена', 'success');
+            closeModal('groupModal');
+            renderAll(); initSelects();
+        }
+        function deleteGroup(name) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            if (!confirm(`Удалить группу "${name}"? Это также удалит всех студентов группы.`)) return;
+            data.students = data.students.filter(s => s.group !== name);
+            delete data.groupDisciplines[name];
+            renderAll(); initSelects(); showToast('Группа удалена', 'success');
+        }
+
+        // ============================================================
+        //  ПОСЕЩАЕМОСТЬ
+        // ============================================================
+        function setAttendance(studentName, date, status) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            if (!date) { showToast('Выберите дату', 'error'); return; }
+            const student = data.students.find(s => s.name === studentName);
+            if (!student) { showToast('Студент не найден', 'error'); return; }
+            if (!student.lessons) student.lessons = [];
+            const existing = student.lessons.find(l => l.date === date);
+            if (existing) existing.status = status;
+            else student.lessons.push({ date, status });
+            student.rating = calcRating(student);
+            renderAttendance(); updateStats();
+            showToast(`Статус для ${studentName} обновлён`, 'success');
+        }
+        function markAllPresent() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const date = document.getElementById('attendanceDate').value;
+            if (!date) { showToast('Выберите дату', 'error'); return; }
+            data.students.forEach(s => {
+                if (!s.lessons) s.lessons = [];
+                const existing = s.lessons.find(l => l.date === date);
+                if (existing) existing.status = 'present';
+                else s.lessons.push({ date, status: 'present' });
+                s.rating = calcRating(s);
+            });
+            renderAttendance(); updateStats();
+            showToast('Все отмечены как присутствующие', 'success');
+        }
+
+        // ============================================================
+        //  ЭКСПОРТ / ИМПОРТ
+        // ============================================================
+        function exportData() {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'students.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Данные экспортированы', 'success');
+        }
+        function handleImport(event) {
+            if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const json = JSON.parse(e.target.result);
+                    data = json;
+                    data.students.forEach(s => s.rating = calcRating(s));
+                    nextWorkId = Math.max(0, ...data.works.map(w => parseInt(w.id.replace('work','')) || 0)) + 1;
+                    initSelects(); renderAll();
+                    showToast('Данные импортированы', 'success');
+                } catch (err) { showToast('Ошибка импорта: ' + err.message, 'error'); }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ============================================================
+        //  ВКЛАДКИ, МОДАЛЬНЫЕ ОКНА, TOAST
+        // ============================================================
+        document.querySelectorAll('.nav-links button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!isAuthorized) { showToast('Сначала введите пароль!', 'error'); return; }
+                document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+                document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+            });
+        });
+
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
+        });
+
+        let toastTimeout;
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            clearTimeout(toastTimeout);
+            requestAnimationFrame(() => toast.classList.add('show'));
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ============================================================
+        //  ЗАПУСК
+        // ============================================================
+        // Скрываем интерфейс до ввода пароля
+        document.querySelectorAll('.github-config, .local-actions, .stats-grid, .tab-content').forEach(el => {
+            el.style.display = 'none';
+        });
+        // Показываем только блок пароля
+        document.querySelector('.password-protect').style.display = 'flex';
+
+        // Если пароль уже сохранён в sessionStorage
+        if (sessionStorage.getItem('adminAuthorized') === 'true') {
+            isAuthorized = true;
+            document.getElementById('adminPassword').value = DEFAULT_PASSWORD;
+            checkPassword();
+        }
+
+        // Сохраняем пароль в sessionStorage при успешном входе
+        const originalCheckPassword = checkPassword;
+        checkPassword = function() {
+            const input = document.getElementById('adminPassword').value;
+            if (input === DEFAULT_PASSWORD) {
+                sessionStorage.setItem('adminAuthorized', 'true');
+                originalCheckPassword();
+            } else {
+                showToast('Неверный пароль!', 'error');
+            }
+        };
+        // Переопределяем функцию
+        window.checkPassword = checkPassword;
+    </script>
+</body>
+</html>
