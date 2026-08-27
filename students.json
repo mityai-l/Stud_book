@@ -137,6 +137,10 @@
         {
           "date": "2024-02-29",
           "status": "present"
+        },
+        {
+          "date": "2026-08-27",
+          "status": "late"
         }
       ],
       "grades": {
@@ -146,7 +150,7 @@
         "work4": 15,
         "work5": 13
       },
-      "rating": 68.3
+      "rating": 64.4
     },
     {
       "name": "Петрова Анна",
@@ -170,6 +174,10 @@
         },
         {
           "date": "2024-02-29",
+          "status": "present"
+        },
+        {
+          "date": "2026-08-27",
           "status": "present"
         }
       ],
@@ -205,6 +213,10 @@
         {
           "date": "2024-02-29",
           "status": "absent"
+        },
+        {
+          "date": "2026-08-27",
+          "status": "present"
         }
       ],
       "grades": {
@@ -212,7 +224,7 @@
         "work4": 10,
         "work5": 8
       },
-      "rating": 25.4
+      "rating": 29.3
     },
     {
       "name": "Козлова Мария",
@@ -237,6 +249,10 @@
         {
           "date": "2024-02-29",
           "status": "present"
+        },
+        {
+          "date": "2026-08-27",
+          "status": "late"
         }
       ],
       "grades": {
@@ -245,7 +261,7 @@
         "work6": 10,
         "work7": 9
       },
-      "rating": 58
+      "rating": 52.9
     },
     {
       "name": "Смирнов Алексей",
@@ -270,20 +286,29 @@
         {
           "date": "2024-02-29",
           "status": "present"
+        },
+        {
+          "date": "2026-08-27",
+          "status": "present"
         }
       ],
       "grades": {
         "work6": 7,
         "work7": 8
       },
-      "rating": 29.7
+      "rating": 31.8
     },
     {
       "name": "Петров Илья",
       "group": "ИСП211",
-      "lessons": [],
+      "lessons": [
+        {
+          "date": "2026-08-27",
+          "status": "present"
+        }
+      ],
       "grades": {},
-      "rating": 0
+      "rating": 30
     }
   ]
 }
