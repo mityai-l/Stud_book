@@ -1,6 +1,2731 @@
 {
-  "disciplines": [],
-  "groupDisciplines": {},
-  "works": [],
-  "students": []
+  "disciplines": [
+    {
+      "id": "IT",
+      "name": "Информационные технологии"
+    },
+    {
+      "id": "MDK04",
+      "name": "МДК 04.01"
+    },
+    {
+      "id": "UP04",
+      "name": "УП.04"
+    },
+    {
+      "id": "OPBD",
+      "name": "ОПБД"
+    }
+  ],
+  "groupDisciplines": {
+    "ИСП211": [
+      "IT",
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП231": [
+      "IT",
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП251": [
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП271": [
+      "MDK04",
+      "UP04"
+    ],
+    "ИСП291": [
+      "OPBD",
+      "IT"
+    ],
+    "ИСП2111": [
+      "IT"
+    ],
+    "ИСП2131": [
+      "IT"
+    ],
+    "ИСП2151": [
+      "IT"
+    ],
+    "ИСП2191": [
+      "IT"
+    ],
+    "ИСП2311": [
+      "IT"
+    ],
+    "ИСП2331": [
+      "OPBD"
+    ],
+    "ИСП2351": [
+      "OPBD"
+    ]
+  },
+  "works": [
+    {
+      "id": "work1",
+      "name": "Лабораторная №1",
+      "discipline": "IT",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work2",
+      "name": "Лабораторная №2",
+      "discipline": "IT",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work3",
+      "name": "Практическая работа",
+      "discipline": "MDK04",
+      "maxScore": 15,
+      "passScore": 9
+    },
+    {
+      "id": "work4",
+      "name": "Курсовая работа",
+      "discipline": "MDK04",
+      "maxScore": 20,
+      "passScore": 12
+    },
+    {
+      "id": "work5",
+      "name": "Отчет по практике",
+      "discipline": "UP04",
+      "maxScore": 15,
+      "passScore": 9
+    },
+    {
+      "id": "work6",
+      "name": "Лабораторная №1",
+      "discipline": "OPBD",
+      "maxScore": 10,
+      "passScore": 6
+    },
+    {
+      "id": "work7",
+      "name": "Лабораторная №2",
+      "discipline": "OPBD",
+      "maxScore": 10,
+      "passScore": 6
+    }
+  ],
+  "students": [
+    {
+      "name": "Абалканов Чынгыз",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work1": 8,
+        "work2": 9,
+        "work3": 12,
+        "work4": 15,
+        "work5": 13
+      },
+      "rating": 68.3
+    },
+    {
+      "name": "Алёшкин Константин",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work1": 10,
+        "work2": 10,
+        "work3": 14,
+        "work4": 18,
+        "work5": 15
+      },
+      "rating": 82.1
+    },
+    {
+      "name": "Артеменко Андрей",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "late"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "absent"
+        }
+      ],
+      "grades": {
+        "work3": 7,
+        "work4": 10,
+        "work5": 8
+      },
+      "rating": 25.4
+    },
+    {
+      "name": "Бехтин Игорь",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work1": 9,
+        "work2": 8,
+        "work6": 10,
+        "work7": 9
+      },
+      "rating": 58
+    },
+    {
+      "name": "Борисов Артём",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Вершинин Евгений",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Волков Владислав",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Гурова Варвара",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Дмитриев Артём",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Ефимова Дарья",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Захарова Кристина",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Казакбиев Даниял",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Концевич Владислав",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кулаев Амонулло",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Лотарев Никита",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Лукашин Елисей",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Мирзобоев Амирбек",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Нестеров Максим",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Османов Артём",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Поршин Никита",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Риванов Валерий",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Романов Марк",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Савалёв Степан",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Синкевич Алина",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Сорокин Артемий",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Суровегин Никита",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Туйчиева Азизахон",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Цыплаков Даниил",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Шибаева Дарья",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Юлин Николай",
+      "group": "ИСП211",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Абдуллаев Артур",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Аветисян Ален",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Алексеев Леонид",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Асадов Дамир",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Виноградова Елизавета",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Гамов Руслан",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Гуняева Милана",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Ермаков Александр",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Зазулинский Ярослав",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Ковыров Макар",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кочанова Диана",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кудашев Богдан",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кудин Николай",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кузьменков Дмитрий",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Миночкин Владислав",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Нечаев Даниил",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Никитин Тимофей",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Пашалы Александр",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Сизонов Артём",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Урвачев Платон",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Фесенко Мария",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Шакиров Илья",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Шаров Никита",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Шмелев Николай",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Ярошенко Михаил",
+      "group": "ИСП231",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Бегичев Юрий",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Ванетик Мирослав",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Варисов Искандер",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Волкова Виктория",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Вселенный Матвей",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Гнилицкий Дмитрий",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Григорьев Артём",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Деменков Лев",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Дурдыев Егор",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Исаев Эмиль",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кандаков Хушбахт",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Кандов Амин",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Каримова Малика",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Костина Ариадна",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Куницын Максим",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Курбатов Арсений",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Лобанов Потап",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Лунева Александра",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Меленчук Даниил",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Михайлов Денис",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Науменко Артем",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Невзорова Арина",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Петров Никита",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Радиченко Алексей",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Райгородский Даниил",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Семейкин Егор",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Солдатов Никита",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Стачев Глеб",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    },
+    {
+      "name": "Усенок Иван",
+      "group": "ИСП251",
+      "lessons": [
+        {
+          "date": "2024-02-01",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-08",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-15",
+          "status": "present"
+        },
+        {
+          "date": "2024-02-22",
+          "status": "absent"
+        },
+        {
+          "date": "2024-02-29",
+          "status": "present"
+        }
+      ],
+      "grades": {
+        "work6": 7,
+        "work7": 8
+      },
+      "rating": 29.7
+    }
+  ]
 }
