@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Электронный журнал</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><h1>Электронный журнал</h1><p>Просмотр для студентов</p></header>
+<main>
+<section class="card controls">
+  <label>Группа<select id="group"></select></label>
+  <label>Студент<select id="student"></select></label>
+</section>
+<section class="card">
+  <h2 id="studentTitle">Выберите студента</h2>
+  <div id="summary" class="summary"></div>
+</section>
+<section class="card"><h2>Посещаемость</h2><div id="attendance"></div></section>
+<section class="card"><h2>Практические работы</h2><div id="practicals"></div></section>
+<section class="card"><h2>Успеваемость</h2><div id="grades"></div></section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
