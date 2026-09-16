@@ -1,0 +1,34 @@
+#Django
+
+python manage.py startapp <name> apps/<name>   # создать приложение
+python manage.py makemigrations                 # создать миграции
+python manage.py migrate                        # применить миграции
+python manage.py createsuperuser                # суперпользователь
+python manage.py shell                          # Python-консоль с Django
+python manage.py test                           # запустить тесты
+python manage.py check                          # проверить проект
+python manage.py runserver                      # запустить сервер
+
+#PostgreSQL
+
+psql -U ams -d ams                              # подключиться к БД
+psql -U ams -d ams -c "\dt"                     # список таблиц
+psql -U ams -d ams -c "\d assets_asset"         # описание таблицы
+psql -U ams -d ams -c "SELECT * FROM accounts_user;"  # SELECT
+
+#Redis
+
+redis-cli ping                                  # проверка
+redis-cli KEYS "*"                              # все ключи
+redis-cli GET "<key>"                           # значение
+redis-cli TTL "<key>"                           # время жизни
+redis-cli FLUSHDB                               # очистить БД
+
+#Git
+
+git init                                        # инициализация
+git add .                                       # добавить всё
+git commit -m "сообщение"                       # коммит
+git status                                      # состояние
+git log --oneline                               # история
+git push                                        # отправить
