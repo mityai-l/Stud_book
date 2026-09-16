@@ -1,4 +1,4 @@
-#Django
+Django
 
 python manage.py startapp <name> apps/<name>   # создать приложение
 python manage.py makemigrations                 # создать миграции
@@ -9,14 +9,14 @@ python manage.py test                           # запустить тесты
 python manage.py check                          # проверить проект
 python manage.py runserver                      # запустить сервер
 
-#PostgreSQL
+PostgreSQL
 
 psql -U ams -d ams                              # подключиться к БД
 psql -U ams -d ams -c "\dt"                     # список таблиц
 psql -U ams -d ams -c "\d assets_asset"         # описание таблицы
 psql -U ams -d ams -c "SELECT * FROM accounts_user;"  # SELECT
 
-#Redis
+Redis
 
 redis-cli ping                                  # проверка
 redis-cli KEYS "*"                              # все ключи
@@ -24,7 +24,7 @@ redis-cli GET "<key>"                           # значение
 redis-cli TTL "<key>"                           # время жизни
 redis-cli FLUSHDB                               # очистить БД
 
-#Git
+Git
 
 git init                                        # инициализация
 git add .                                       # добавить всё
