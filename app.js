@@ -3,7 +3,7 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function init(){
   try{db=await (await fetch("public-data.json")).json(); fillGroups();}
-  catch(e){document.querySelector("main").innerHTML='<section class="card"><h2>Данные пока не опубликованы</h2><p>Администратор должен загрузить файл public-data.json в репозиторий.</p></section>';}
+  catch(e){console.error("init failed:",e); document.querySelector("main").innerHTML='<section class="card"><h2>Данные пока не опубликованы</h2><p>Администратор должен загрузить файл public-data.json в репозиторий.</p></section>';}
 }
 function fillGroups(){
   $("group").innerHTML='<option value="">— выберите группу —</option>'+db.groups.map(g=>`<option value="${g.id}">${esc(g.name)}</option>`).join("");
